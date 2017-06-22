@@ -1,10 +1,9 @@
 pragma solidity ^0.4.11;
 
 import "./StandardToken.sol";
-import "./SafeMath.sol";
 
 /* Taking ideas from BAT token */
-contract NEToken is StandardToken, SafeMath {
+contract NEToken is StandardToken {
 
     // Token metadata
     string public constant name = "Nimiq Network Interim Token";
