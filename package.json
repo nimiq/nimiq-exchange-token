@@ -1,0 +1,32 @@
+{
+  "name": "nimiq-exchange-token",
+  "version": "1.0.0",
+  "homepage": "https://nimiq.com/",
+  "description": "",
+  "main": "contracts/NEToken.sol",
+  "private": true,
+  "scripts": {
+    "testRPC": "./startTestRPC.sh",
+    "build": "truffle compile",
+    "test": "truffle test"
+  },
+  "author": {
+    "name": "The Nimiq Core Development Team",
+    "url": "https://nimiq.com/"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/nimiq-network/nimiq-exchange-token/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nimiq-network/nimiq-exchange-token.git"
+  },
+  "engines": {
+    "node": ">=7.9.0"
+  },
+  "devDependencies": {
+    "ethereumjs-testrpc": "^3.0.5",
+    "truffle": "^3.2.5"
+  }
+}
