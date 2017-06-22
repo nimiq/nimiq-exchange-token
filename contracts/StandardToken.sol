@@ -60,6 +60,12 @@ contract StandardToken is Token, SafeMath {
     onlyPayloadSize(2)
     returns (bool success)
     {
+        // WARNING! When changing the approval amount, first set it back to zero AND
+        // wait until the transaction is mined. Only afterwards set the new amount.
+        // Otherwise you may be prone to a race condition attack.
+        // See: https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+        require(_value == 0 || allowed[msg.sender][_spender] == 0);
+
         allowed[msg.sender][_spender] = _value;
         Approval(msg.sender, _spender, _value);
         return true;
