@@ -31,7 +31,7 @@ contract NEToken is StandardToken {
     uint256 public constant TOKEN_MIN = 1 * 10**decimals; // 1 NET
 
     // We need to keep track of how much ether have been contributed, since we have a cap for ETH too
-    uint256 private totalReceivedEth = 0;
+    uint256 public totalReceivedEth = 0;
 
     // Since we have different exchange rates at different stages, we need to keep track
     // of how much ether each contributed in case that we need to issue a refund
