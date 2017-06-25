@@ -196,7 +196,6 @@ contract NEToken is StandardToken {
     external
     minimumReached
     onlyOwner
-    onlyPayloadSize(1)
     {
         require(_value <= this.balance);
 
