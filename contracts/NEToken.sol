@@ -23,8 +23,8 @@ contract NEToken is StandardToken {
     uint256 public fundingEndBlock;          // start date and 28 day duration requirements
     uint256 public exchangeRateChangesBlock; // block number that triggers the exchange rate change
 
-    uint256 public constant TOKEN_FIRST_EXCHANGE_RATE = 175; // 175 NETs per 1 WEI
-    uint256 public constant TOKEN_SECOND_EXCHANGE_RATE = 125; // 125 NETs per 1 WEI
+    uint256 public constant TOKEN_FIRST_EXCHANGE_RATE = 175; // 175 NETs per 1 ETH
+    uint256 public constant TOKEN_SECOND_EXCHANGE_RATE = 125; // 125 NETs per 1 ETH
     uint256 public constant TOKEN_CREATION_CAP = 10.5 * (10**6) * 10**decimals; // 10.5 million NETs
     uint256 public constant ETH_RECEIVED_CAP = 60 * (10**3) * 10**decimals; // 60 000 ETH
     uint256 public constant ETH_RECEIVED_MIN = 5 * (10**3) * 10**decimals; // 5 000 ETH
@@ -141,8 +141,8 @@ contract NEToken is StandardToken {
         require(checkedReceivedEth <= ETH_RECEIVED_CAP);
 
         // If all is fine with the ETH cap, we continue to check the
-        // minimum amount of tokens and the
-        // cap for how many tokens have been generated so far
+        // minimum amount of tokens and the cap for how many tokens
+        // have been generated so far
         uint256 tokens = safeMult(msg.value, getCurrentTokenPrice());
         require(tokens >= TOKEN_MIN);
         uint256 checkedSupply = safeAdd(totalSupply, tokens);
