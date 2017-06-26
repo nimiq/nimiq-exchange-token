@@ -375,7 +375,7 @@ contract('NEToken', function(accounts) {
             assert.ok(getEvent('LogRefund', ret), 'should log a Refund event');
             return lastBlock();
         }).then(lastBlock => {
-            gasUsed = lastBlock.gasUsed;
+            gasUsed = lastBlock.gasUsed + 1; // Add some extra gas to work around rounding errors
             return web3.eth.getBalance(accounts[0]);
         }).then(balance => {
             assert.ok(balance >= (initialBalance+standardBid-(gasUsed*gasPrice)), 'balance is not correctly updated');

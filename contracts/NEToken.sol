@@ -178,7 +178,6 @@ contract NEToken is StandardToken {
     function redeemTokens(bytes32 nimiqAddress)
     external
     isRedeeming
-    onlyPayloadSize(1)
     {
         uint256 netVal = balances[msg.sender];
         require(netVal >= TOKEN_MIN); // At least TOKEN_MIN tokens have to be redeemed
