@@ -552,7 +552,7 @@ contract('NEToken', function(accounts) {
 
     it('should allow tokens to be traded after finalization', function() {
         return NEToken.deployed().then(net => {
-            return net.transfer(accounts[1], 10, {
+            return net.transfer(accounts[3], 10, {
                 from: accounts[0],
                 gas: 2099999,
                 gasPrice: 20000000000
@@ -562,5 +562,98 @@ contract('NEToken', function(accounts) {
         }).catch(() => {
             assert.fail('could not trade tokens');
         });
+    });
+
+    it("should fail when trying to transfer too many tokens", function(done) {
+        NEToken.deployed().then(net => {
+            return net.transfer.call(accounts[0], 10, {
+                from: accounts[4],
+                gas: 2099999,
+                gasPrice: 20000000000
+            });
+        }).then(function (result) {
+            assert.isFalse(result);
+            done();
+        }).catch(done);
+    });
+
+    it("should fail when trying to transfer zero", function(done) {
+        NEToken.deployed().then(net => {
+            return net.transfer.call(accounts[0], 0, {
+                from: accounts[3],
+                gas: 2099999,
+                gasPrice: 20000000000
+            });
+        }).then(function (result) {
+            assert.isFalse(result);
+            done();
+        }).catch(done);
+    });
+
+    it("should approve 10 to accounts[1]", function(done) {
+        let net = null;
+        NEToken.deployed().then(instance => {
+            net = instance;
+            return net.approve(accounts[4], 10, {
+                from: accounts[3],
+                gas: 2099999,
+                gasPrice: 20000000000
+            });
+        }).then(function (result) {
+            return net.allowance.call(accounts[3], accounts[4]);
+        }).then(function (result) {
+            assert.strictEqual(result.toNumber(), 10);
+            done();
+        }).catch(done);
+    });
+
+    it("transferFrom works", function(done) {
+        let net = null;
+        NEToken.deployed().then(instance => {
+            net = instance;
+            return net.transferFrom(accounts[3], accounts[4], 5, {
+                from: accounts[4],
+                gas: 2099999,
+                gasPrice: 20000000000
+            });
+        }).then(function (result) {
+            return net.allowance.call(accounts[3], accounts[4]);
+        }).then(function (result) {
+            assert.strictEqual(result.toNumber(), 5);
+            return net.balanceOf.call(accounts[4]);
+        }).then(function (result) {
+            assert.strictEqual(result.toNumber(), 5);
+            done();
+        }).catch(done);
+    });
+
+    it("fails for transfer from account with no allowance", function(done) {
+        let net = null;
+        NEToken.deployed().then(instance => {
+            net = instance;
+            return net.transferFrom.call(accounts[3], accounts[4], 5, {
+                from: accounts[2],
+                gas: 2099999,
+                gasPrice: 20000000000
+            });
+        }).then(function (result) {
+              assert.isFalse(result);
+              done();
+        }).catch(done);
+    });
+
+    it("fails for transfer from account with not enough allowance", function(done) {
+        let net = null;
+        NEToken.deployed().then(instance => {
+            net = instance;
+            return net.transferFrom.call(accounts[3], accounts[4], 6, {
+                from: accounts[4],
+                gas: 2099999,
+                gasPrice: 20000000000
+            });
+        }).then(function (result) {
+              assert.isFalse(result);
+              done();
+        }).catch(done);
     });
 });
