@@ -1,5 +1,5 @@
 # nimiq-exchange-token
-Fundraising Contract
+Contribution Contract
 
 ## Run Testsuite
 - run `npm install` first
